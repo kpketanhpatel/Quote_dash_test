@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotes Page</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static './style.css' %}"> 
+
+</head>
+<body>
+<h1>Quote Dashboard</h1>
+
+<h1>Hello {{user.first_name}} {{user.last_name}}</h1>
+
+<section>
+    <h2>All the Quotes</h2>  
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>Quote</th>
+                <th>Author</th>
+                <th>Poster</th>
+                <th>Like</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for Quote in quotes %}  
+            <tr>
+                <td>{{ Quote.quote }}</td>
+                <td>{{ Quote.author }}</td> 
+                <td>{{ Quote.poster.first_name }} {{ Quote.poster.last_name }}</td>
+                <td> <a href="/add_like/{{Quote.id}}">Like</a> </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+<section>
+    <form action="/quotes_new" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="author">Author</label>
+            <input type="text" name="author" id="author" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="quote">Quote</label>
+            <input type="text" name="quote" id="quote" class="form-control">
+        </div>
+        <button class="btn btn-primary">Submit</button>
+    </form>
+</section>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</body>
+</html>
